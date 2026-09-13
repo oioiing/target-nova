@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.playwright-mcp/
+.git-local-backup/
+target_nova.db
+*.log
+
+# Local source documents and generated QA files
+0/
+1/
+*.docx
+*.pdf
+*_Demo界面效果图.png
+palette-*.png
+qa-*.png

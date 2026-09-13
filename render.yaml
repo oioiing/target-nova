@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: target-nova
+    runtime: python
+    plan: free
+    buildCommand: ""
+    startCommand: python server.py
+    healthCheckPath: /api/health
+    autoDeploy: true

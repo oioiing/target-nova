@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>靶智星图 TARGET·NOVA</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-theme="day">
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="靶智星图首页">
+        <span class="brand-mark">TN</span>
+        <span>
+          <strong>靶智星图</strong>
+          <em>TARGET·NOVA</em>
+        </span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="#screening">Screening</a>
+        <a href="#models">Models</a>
+        <a href="#data">Data</a>
+        <a href="#reports">Reports</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="切换日夜模式">☾</button>
+        <button class="motion-toggle" id="motionToggle" aria-pressed="false">暂停动效</button>
+        <a class="primary-link" href="#screening">+ New Screening</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <div class="hero-index">AI DRUG TARGET SCREENING · 01</div>
+          <h1 aria-label="靶智星图"><span aria-hidden="true">靶智</span><span aria-hidden="true">星图<span class="title-orbit">✳</span></span></h1>
+          <p class="hero-subtitle">基于生物大模型的药物重定位与靶点智能筛选平台</p>
+          <p class="hero-text">从蛋白序列到候选药物，让 AI 帮助科研团队更快形成值得进一步验证的实验优先级。</p>
+          <div class="hero-actions">
+            <a class="primary-link large" href="#screening">开始智能筛选</a>
+            <a class="secondary-link" href="#result">查看 Demo 结果</a>
+          </div>
+          <div class="evidence-strip" aria-label="证据等级">
+            <span><i class="green"></i>Published</span>
+            <span><i class="blue"></i>Reproduced</span>
+            <span><i class="violet"></i>Live Prediction</span>
+            <span><i class="gray"></i>Experimental Validation</span>
+          </div>
+        </div>
+        <figure class="hero-photo">
+          <img src="./assets/laboratory.webp" alt="蓝色手套操作移液器，在实验室微孔板中进行样本移液的概念场景" width="1536" height="1024" fetchpriority="high" />
+          <figcaption><span>FROM SEQUENCE TO DISCOVERY</span><span>AI 生成 · 实验室概念配图</span></figcaption>
+        </figure>
+      </section>
+
+      <div class="marquee" aria-label="平台能力摘要">
+        <div>
+          <span>Protein Sequence</span>
+          <span>SMILES Library</span>
+          <span>TSEDTA</span>
+          <span>MREDTA Consensus</span>
+          <span>Affinity Ranking</span>
+          <span>CSV Report</span>
+          <span>Binding Residues</span>
+          <span>Protein Sequence</span>
+          <span>SMILES Library</span>
+          <span>TSEDTA</span>
+          <span>MREDTA Consensus</span>
+          <span>Affinity Ranking</span>
+          <span>CSV Report</span>
+          <span>Binding Residues</span>
+        </div>
+      </div>
+
+      <section class="workflow" aria-label="平台流程">
+        <article>
+          <span>01</span>
+          <strong>Target</strong>
+          <p>输入靶蛋白名称、突变信息和氨基酸序列。</p>
+        </article>
+        <article>
+          <span>02</span>
+          <strong>Drug Library</strong>
+          <p>上传 SMILES CSV 或使用演示候选药物库。</p>
+        </article>
+        <article>
+          <span>03</span>
+          <strong>AI Model</strong>
+          <p>TSEDTA 主模型推理，MREDTA 用于后续一致性比较。</p>
+        </article>
+        <article>
+          <span>04</span>
+          <strong>Top-K</strong>
+          <p>输出候选排序、分布图、详情和报告。</p>
+        </article>
+      </section>
+
+      <section class="research-visuals" aria-labelledby="researchTitle">
+        <div class="research-heading">
+          <div><span class="section-kicker">MOLECULAR PERSPECTIVE</span><h2 id="researchTitle">从分子视角，<br />探索新的可能。</h2></div>
+          <p>连接蛋白序列、分子表示与候选排序。<br />让计算筛选成为下一步研究的起点。</p>
+        </div>
+        <div class="research-media-grid">
+          <figure class="molecule-photo">
+            <img src="./assets/protein-concept.webp" alt="蓝绿色蛋白折叠结构与黄色小分子配体的概念渲染" width="1536" height="1024" loading="lazy" decoding="async" />
+            <figcaption><strong>分子之间，蕴藏可能。</strong><span>AI 生成 · 蛋白与配体概念图，非实际结构</span></figcaption>
+          </figure>
+          <div class="protein-stage">
+            <div class="stage-toolbar"><span>交互式结构示意</span><button id="pause3d">暂停旋转</button></div>
+            <div id="proteinViewer" aria-label="可旋转蛋白质结构示意图"></div>
+            <div class="residue-panel"><strong>拖动旋转 · 滚轮缩放</strong><span id="residueLabel">合成结构演示</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screening" id="screening">
+        <div class="section-heading">
+          <span class="section-kicker">02 · SCREENING CONSOLE</span>
+          <h2>Smart Screening</h2>
+          <p>第一版使用明确标注的演示数据；真实模型接口接入后切换为 Live Prediction。</p>
+        </div>
+        <div class="screening-grid">
+          <form class="control-panel" id="screeningForm">
+            <div class="mode-tabs" role="tablist" aria-label="预测模式">
+              <button type="button" class="active" data-mode="batch">Batch</button>
+              <button type="button" data-mode="single">Single</button>
+              <button type="button" data-mode="compare">Model Consensus</button>
+            </div>
+            <label>
+              Protein Name
+              <input id="targetNameInput" value="EGFR" />
+            </label>
+            <label>
+              Mutation
+              <input id="mutationInput" value="T790M" />
+            </label>
+            <label>
+              Protein Sequence
+              <textarea id="proteinInput">MALTPVDSSPDGIKPHQISLLKCAYGIKFKEKDALDVYINMNNKVLGQLQNSDEVRLYNQNVLITQPTSKQYFCAGGYYGIKLVVRGQGFEVWMGIDPENGNPYYVTDYHQLDTVEKKVELKQWLGVLLNYVQGTSLQRLYYDSVRLDPYDAEVRGDGKYVMLFVGNGQDTRLRNIYEALKDAKMAEAYSEIGMKGERRGKLNPEGVKYATTANYAQEFGLVRVHRDLAARNVLVKADFGLARVLAKYRA</textarea>
+            </label>
+            <div class="field-row">
+              <label>
+                Candidate Library
+                <select id="librarySelect">
+                  <option value="egfr">Demo EGFR Library · 1,024 candidates</option>
+                  <option value="bindingdb">BindingDB subset · 2,034 candidates</option>
+                  <option value="kiba">KIBA reference subset · 1,284 candidates</option>
+                </select>
+              </label>
+              <label>
+                Top-K
+                <input id="topKInput" type="number" min="5" max="50" value="20" />
+              </label>
+            </div>
+            <label class="upload-field">
+              Upload CSV
+              <input id="csvInput" type="file" accept=".csv,text/csv" />
+              <span id="csvStatus">可选：drug_id, drug_name, smiles</span>
+            </label>
+            <div class="model-choice">
+              <label><input type="radio" name="model" value="TSEDTA" checked /> TSEDTA</label>
+              <label><input type="radio" name="model" value="MREDTA" /> MREDTA</label>
+              <label><input type="radio" name="model" value="Both" /> Both</label>
+            </div>
+            <button class="primary-button" type="submit">Start Screening</button>
+          </form>
+
+          <aside class="run-panel">
+            <div class="run-header">
+              <span id="runState">Demo Data</span>
+              <strong id="runPercent">100%</strong>
+            </div>
+            <div class="progress-track"><div id="progressFill"></div></div>
+            <div class="pipeline">
+              <span class="done">Preparing data</span>
+              <span class="done">Encoding molecules</span>
+              <span class="done">Encoding protein</span>
+              <span class="done">Model inference</span>
+              <span class="done">Ranking candidates</span>
+            </div>
+            <div class="stat-grid">
+              <article><span>Candidates</span><strong id="candidateCount">1024</strong></article>
+              <article><span>Model</span><strong id="modelName">TSEDTA</strong></article>
+              <article><span>Top Prediction</span><strong id="topScore">9.42</strong></article>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="result" id="result">
+        <div class="section-heading split">
+          <div>
+            <span class="section-kicker">03 · RANKING OUTPUT</span>
+            <h2>Screening Result</h2>
+            <p>EGFR T790M · computational prediction · pK<sub>d</sub> scale</p>
+          </div>
+          <div class="result-actions">
+            <button class="secondary-button" id="top10Btn">Top 10</button>
+            <button class="secondary-button" id="top20Btn">Top 20</button>
+            <button class="primary-button slim" id="exportBtn">Download CSV</button>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="ranking-panel">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Drug</th>
+                  <th>Affinity</th>
+                  <th>Priority</th>
+                  <th>Evidence</th>
+                </tr>
+              </thead>
+              <tbody id="rankTable"></tbody>
+            </table>
+          </div>
+          <div class="chart-panel">
+            <h3>Affinity Distribution</h3>
+            <div class="histogram" id="histogram"></div>
+            <h3>Top-K Ranking</h3>
+            <div class="bar-chart" id="barChart"></div>
+          </div>
+        </div>
+        <article class="candidate-detail" id="candidateDetail">
+          <span>Candidate Detail</span>
+          <strong>Compound-017</strong>
+          <p>SMILES: CCOc1ccc2nc(S(N)(=O)=O)sc2c1 · Rank #1 · TSEDTA 9.42 · MREDTA 9.17 · Agreement 92%</p>
+          <div class="agreement"><i></i></div>
+        </article>
+      </section>
+
+      <section class="models" id="models">
+        <div class="section-heading">
+          <span class="section-kicker">04 · EVIDENCE SYSTEM</span>
+          <h2>Model Evidence</h2>
+          <p>论文结果、团队复现、实时推理和实验验证分层展示，避免把计算候选写成药效结论。</p>
+        </div>
+        <div class="model-grid">
+          <article>
+            <strong>TSEDTA</strong>
+            <p>SMILES Transformer + ESM2 冻结特征提取，LLM-Fusion 与 Dual-Trans 完成 DTA Prediction。</p>
+            <span>Live Prediction 主引擎</span>
+          </article>
+          <article>
+            <strong>MREDTA</strong>
+            <p>BERT 与 Transformer 分子表示编码器，第二阶段作为多模型一致性比较模块。</p>
+            <span>Model Consensus</span>
+          </article>
+          <article>
+            <strong>Interpretability</strong>
+            <p>结合 attention map 标注潜在 binding residues，并映射到 3D 蛋白结构视图。</p>
+            <span>Evidence Layer</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="data" id="data">
+        <div class="section-heading">
+          <span class="section-kicker">05 · PUBLIC DATASETS</span>
+          <h2>Data Center</h2>
+          <p>第一版不使用医院患者数据，使用公开数据与合成演示数据启动产品闭环。</p>
+        </div>
+        <div class="dataset-row">
+          <span>Davis</span>
+          <span>KIBA</span>
+          <span>Metz</span>
+          <span>BindingDB</span>
+          <span>Synthetic Demo Data</span>
+        </div>
+      </section>
+
+      <section class="reports" id="reports">
+        <div class="report-card">
+          <h2>Screening Report</h2>
+          <p>报告记录输入序列、候选库、模型版本、数据量纲、运行模式、Top-K 排名和科研用途免责声明。</p>
+          <button class="primary-button slim" id="downloadReport">Export Demo Report</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      计算结果仅用于科研预筛，不能替代分子对接、结合实验或药效实验验证。
+    </footer>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

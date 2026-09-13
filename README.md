@@ -27,4 +27,3 @@ python server.py
 仓库包含 `render.yaml`。在 Render 中选择 **New Blueprint**，连接本仓库即可创建 Web Service。
 
 免费实例重启后 SQLite 任务历史可能被清空，网站功能和演示数据不受影响。如需长期保存任务记录，可升级持久磁盘或迁移到托管数据库。
-
