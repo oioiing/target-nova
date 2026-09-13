@@ -302,11 +302,21 @@ function initProteinViewer() {
   let modelReady = false;
   let lastFrame = 0;
 
-  fetch("./assets/5xdk.pdb")
-    .then((response) => {
-      if (!response.ok) throw new Error(`PDB request failed: ${response.status}`);
-      return response.text();
-    })
+  const loadStructure = async () => {
+    const sources = [
+      "./assets/5xdk.pdb?v=5xdk",
+      "https://files.rcsb.org/download/5XDK.pdb",
+    ];
+    for (const source of sources) {
+      try {
+        const response = await fetch(source);
+        if (response.ok) return await response.text();
+      } catch {}
+    }
+    throw new Error("PDB structure unavailable");
+  };
+
+  loadStructure()
     .then((pdbData) => {
       viewer.addModel(pdbData, "pdb");
       viewer.setStyle({ hetflag: false }, { cartoon: { color: "#8fc5b5" } });
