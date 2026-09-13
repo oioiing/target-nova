@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>靶智星图 TARGET·NOVA</title>
+    <title>智药星图｜药物智能筛选与重定位平台</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body data-theme="day">
     <header class="site-header">
-      <a class="brand" href="#home" aria-label="靶智星图首页">
-        <span class="brand-mark">TN</span>
+      <a class="brand" href="#home" aria-label="智药星图首页">
+        <span class="brand-mark">ZY</span>
         <span>
-          <strong>靶智星图</strong>
-          <em>TARGET·NOVA</em>
+          <strong>智药星图</strong>
+          <em>DTA SCREENING PLATFORM</em>
         </span>
       </a>
       <nav aria-label="主导航">
@@ -32,24 +32,24 @@
     <main>
       <section class="hero" id="home">
         <div class="hero-copy">
-          <div class="hero-index">AI DRUG TARGET SCREENING · 01</div>
-          <h1 aria-label="靶智星图"><span aria-hidden="true">靶智</span><span aria-hidden="true">星图<span class="title-orbit">✳</span></span></h1>
-          <p class="hero-subtitle">基于生物大模型的药物重定位与靶点智能筛选平台</p>
-          <p class="hero-text">从蛋白序列到候选药物，让 AI 帮助科研团队更快形成值得进一步验证的实验优先级。</p>
+          <div class="hero-index">DRUG–TARGET AFFINITY · 01</div>
+          <h1 aria-label="智药星图"><span aria-hidden="true">智药</span><span aria-hidden="true">星图<span class="title-orbit">✳</span></span></h1>
+          <p class="hero-subtitle">基于生物大模型的药物智能筛选与重定位平台</p>
+          <p class="hero-text">输入蛋白序列与药物 SMILES，完成亲和力预测、候选排序、结果可视化与报告导出。</p>
           <div class="hero-actions">
             <a class="primary-link large" href="#screening">开始智能筛选</a>
-            <a class="secondary-link" href="#result">查看 Demo 结果</a>
+            <a class="secondary-link" href="#result">查看筛选结果</a>
           </div>
           <div class="evidence-strip" aria-label="证据等级">
-            <span><i class="green"></i>Published</span>
-            <span><i class="blue"></i>Reproduced</span>
-            <span><i class="violet"></i>Live Prediction</span>
-            <span><i class="gray"></i>Experimental Validation</span>
+            <span><i class="green"></i>Davis CI 0.8891</span>
+            <span><i class="blue"></i>KIBA CI 0.8745</span>
+            <span><i class="violet"></i>BindingDB CI 0.8698</span>
+            <span><i class="gray"></i>MREDTA KIBA CI 0.880</span>
           </div>
         </div>
         <figure class="hero-photo">
-          <img src="./assets/laboratory.webp" alt="蓝色手套操作移液器，在实验室微孔板中进行样本移液的概念场景" width="1536" height="1024" fetchpriority="high" />
-          <figcaption><span>FROM SEQUENCE TO DISCOVERY</span><span>AI 生成 · 实验室概念配图</span></figcaption>
+          <img src="./assets/laboratory.webp" alt="实验室移液操作" width="1536" height="1024" fetchpriority="high" />
+          <figcaption><span>FROM SEQUENCE TO SCREENING</span><span>蛋白序列 · 候选药物 · 亲和力排序</span></figcaption>
         </figure>
       </section>
 
@@ -81,12 +81,12 @@
         <article>
           <span>02</span>
           <strong>Drug Library</strong>
-          <p>上传 SMILES CSV 或使用演示候选药物库。</p>
+          <p>上传 SMILES CSV 或选择候选药物库。</p>
         </article>
         <article>
           <span>03</span>
-          <strong>AI Model</strong>
-          <p>TSEDTA 主模型推理，MREDTA 用于后续一致性比较。</p>
+          <strong>Dual Models</strong>
+          <p>选择 TSEDTA、MREDTA 或双模型对比。</p>
         </article>
         <article>
           <span>04</span>
@@ -97,18 +97,27 @@
 
       <section class="research-visuals" aria-labelledby="researchTitle">
         <div class="research-heading">
-          <div><span class="section-kicker">MOLECULAR PERSPECTIVE</span><h2 id="researchTitle">从分子视角，<br />探索新的可能。</h2></div>
-          <p>连接蛋白序列、分子表示与候选排序。<br />让计算筛选成为下一步研究的起点。</p>
+          <div><span class="section-kicker">EXPERIMENTAL STRUCTURE</span><h2 id="researchTitle">EGFR T790M<br />复合物结构</h2></div>
+          <p>PDB 5XDK · EGFR 696–1022 T790M<br />与抑制剂 CO-1686 的晶体结构</p>
         </div>
         <div class="research-media-grid">
-          <figure class="molecule-photo">
-            <img src="./assets/protein-concept.webp" alt="蓝绿色蛋白折叠结构与黄色小分子配体的概念渲染" width="1536" height="1024" loading="lazy" decoding="async" />
-            <figcaption><strong>分子之间，蕴藏可能。</strong><span>AI 生成 · 蛋白与配体概念图，非实际结构</span></figcaption>
-          </figure>
+          <article class="structure-facts">
+            <span>STRUCTURE RECORD</span>
+            <strong>5XDK</strong>
+            <dl>
+              <div><dt>蛋白</dt><dd>人源表皮生长因子受体</dd></div>
+              <div><dt>突变</dt><dd>T790M</dd></div>
+              <div><dt>配体</dt><dd>CO-1686</dd></div>
+              <div><dt>方法</dt><dd>X 射线衍射</dd></div>
+              <div><dt>分辨率</dt><dd>2.35 Å</dd></div>
+              <div><dt>发布日期</dt><dd>2017-12-13</dd></div>
+            </dl>
+            <a href="https://www.rcsb.org/structure/5XDK" target="_blank" rel="noreferrer">查看 RCSB PDB 记录 ↗</a>
+          </article>
           <div class="protein-stage">
-            <div class="stage-toolbar"><span>交互式结构示意</span><button id="pause3d">暂停旋转</button></div>
-            <div id="proteinViewer" aria-label="可旋转蛋白质结构示意图"></div>
-            <div class="residue-panel"><strong>拖动旋转 · 滚轮缩放</strong><span id="residueLabel">合成结构演示</span></div>
+            <div class="stage-toolbar"><span>PDB 5XDK · EGFR T790M / CO-1686</span><button id="pause3d">暂停旋转</button></div>
+            <div id="proteinViewer" aria-label="EGFR T790M 与 CO-1686 复合物三维结构"></div>
+            <div class="residue-panel"><strong>拖动旋转 · 滚轮缩放</strong><span id="residueLabel">X 射线衍射 · 2.35 Å</span></div>
           </div>
         </div>
       </section>
@@ -116,15 +125,15 @@
       <section class="screening" id="screening">
         <div class="section-heading">
           <span class="section-kicker">02 · SCREENING CONSOLE</span>
-          <h2>Smart Screening</h2>
-          <p>第一版使用明确标注的演示数据；真实模型接口接入后切换为 Live Prediction。</p>
+          <h2>Drug–Target Screening</h2>
+          <p>提交蛋白序列和候选药物，获得亲和力分数、Top-K 排名、分布图与筛选报告。</p>
         </div>
         <div class="screening-grid">
           <form class="control-panel" id="screeningForm">
             <div class="mode-tabs" role="tablist" aria-label="预测模式">
-              <button type="button" class="active" data-mode="batch">Batch</button>
-              <button type="button" data-mode="single">Single</button>
-              <button type="button" data-mode="compare">Model Consensus</button>
+              <button type="button" class="active" data-mode="batch">批量筛选</button>
+              <button type="button" data-mode="single">单对预测</button>
+              <button type="button" data-mode="compare">双模型对比</button>
             </div>
             <label>
               Protein Name
@@ -142,7 +151,7 @@
               <label>
                 Candidate Library
                 <select id="librarySelect">
-                  <option value="egfr">Demo EGFR Library · 1,024 candidates</option>
+                  <option value="egfr">EGFR Candidate Library · 1,024 candidates</option>
                   <option value="bindingdb">BindingDB subset · 2,034 candidates</option>
                   <option value="kiba">KIBA reference subset · 1,284 candidates</option>
                 </select>
@@ -162,26 +171,26 @@
               <label><input type="radio" name="model" value="MREDTA" /> MREDTA</label>
               <label><input type="radio" name="model" value="Both" /> Both</label>
             </div>
-            <button class="primary-button" type="submit">Start Screening</button>
+            <button class="primary-button" type="submit">开始筛选</button>
           </form>
 
           <aside class="run-panel">
             <div class="run-header">
-              <span id="runState">Demo Data</span>
+              <span id="runState">计算就绪</span>
               <strong id="runPercent">100%</strong>
             </div>
             <div class="progress-track"><div id="progressFill"></div></div>
             <div class="pipeline">
-              <span class="done">Preparing data</span>
-              <span class="done">Encoding molecules</span>
-              <span class="done">Encoding protein</span>
-              <span class="done">Model inference</span>
-              <span class="done">Ranking candidates</span>
+              <span class="done">数据校验</span>
+              <span class="done">药物序列编码</span>
+              <span class="done">蛋白序列编码</span>
+              <span class="done">亲和力计算</span>
+              <span class="done">候选排序</span>
             </div>
             <div class="stat-grid">
-              <article><span>Candidates</span><strong id="candidateCount">1024</strong></article>
-              <article><span>Model</span><strong id="modelName">TSEDTA</strong></article>
-              <article><span>Top Prediction</span><strong id="topScore">9.42</strong></article>
+              <article><span>候选数量</span><strong id="candidateCount">1024</strong></article>
+              <article><span>计算模型</span><strong id="modelName">TSEDTA</strong></article>
+              <article><span>最高分值</span><strong id="topScore">9.42</strong></article>
             </div>
           </aside>
         </div>
@@ -192,7 +201,7 @@
           <div>
             <span class="section-kicker">03 · RANKING OUTPUT</span>
             <h2>Screening Result</h2>
-            <p>EGFR T790M · computational prediction · pK<sub>d</sub> scale</p>
+            <p>EGFR T790M · TSEDTA / MREDTA · pK<sub>d</sub> scale</p>
           </div>
           <div class="result-actions">
             <button class="secondary-button" id="top10Btn">Top 10</button>
@@ -209,7 +218,7 @@
                   <th>Drug</th>
                   <th>Affinity</th>
                   <th>Priority</th>
-                  <th>Evidence</th>
+                  <th>Result Type</th>
                 </tr>
               </thead>
               <tbody id="rankTable"></tbody>
@@ -232,25 +241,25 @@
 
       <section class="models" id="models">
         <div class="section-heading">
-          <span class="section-kicker">04 · EVIDENCE SYSTEM</span>
-          <h2>Model Evidence</h2>
-          <p>论文结果、团队复现、实时推理和实验验证分层展示，避免把计算候选写成药效结论。</p>
+          <span class="section-kicker">04 · MODEL SYSTEM</span>
+          <h2>Models & Benchmarks</h2>
+          <p>平台采用 TSEDTA 与 MREDTA 两条技术路线，并列展示公开基准数据集上的评价指标。</p>
         </div>
         <div class="model-grid">
           <article>
             <strong>TSEDTA</strong>
             <p>SMILES Transformer + ESM2 冻结特征提取，LLM-Fusion 与 Dual-Trans 完成 DTA Prediction。</p>
-            <span>Live Prediction 主引擎</span>
+            <span>Davis CI 0.8891 · KIBA CI 0.8745</span>
           </article>
           <article>
             <strong>MREDTA</strong>
             <p>BERT 与 Transformer 分子表示编码器，第二阶段作为多模型一致性比较模块。</p>
-            <span>Model Consensus</span>
+            <span>KIBA CI 0.880 · MSE 0.146</span>
           </article>
           <article>
-            <strong>Interpretability</strong>
-            <p>结合 attention map 标注潜在 binding residues，并映射到 3D 蛋白结构视图。</p>
-            <span>Evidence Layer</span>
+            <strong>双模型对比</strong>
+            <p>并列输出两个模型的独立计算结果，用于比较模型差异和候选排序一致性。</p>
+            <span>TSEDTA × MREDTA</span>
           </article>
         </div>
       </section>
@@ -259,14 +268,12 @@
         <div class="section-heading">
           <span class="section-kicker">05 · PUBLIC DATASETS</span>
           <h2>Data Center</h2>
-          <p>第一版不使用医院患者数据，使用公开数据与合成演示数据启动产品闭环。</p>
+          <p>平台采用公开基准数据集进行模型评价与结果比较。</p>
         </div>
         <div class="dataset-row">
           <span>Davis</span>
           <span>KIBA</span>
-          <span>Metz</span>
           <span>BindingDB</span>
-          <span>Synthetic Demo Data</span>
         </div>
       </section>
 
@@ -274,7 +281,7 @@
         <div class="report-card">
           <h2>Screening Report</h2>
           <p>报告记录输入序列、候选库、模型版本、数据量纲、运行模式、Top-K 排名和科研用途免责声明。</p>
-          <button class="primary-button slim" id="downloadReport">Export Demo Report</button>
+          <button class="primary-button slim" id="downloadReport">Export Screening Report</button>
         </div>
       </section>
     </main>
@@ -283,7 +290,8 @@
       计算结果仅用于科研预筛，不能替代分子对接、结合实验或药效实验验证。
     </footer>
 
-    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
+

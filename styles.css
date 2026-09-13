@@ -1039,6 +1039,107 @@ h1 > span { display: inline; }
   .workflow article { padding: 12px; }
 }
 
+.hero-photo img {
+  transform: translateY(var(--hero-shift, 0px)) scale(1.08);
+  transition: transform 80ms linear;
+}
+
+.research-media-grid {
+  grid-template-columns: minmax(280px, 0.62fr) minmax(520px, 1.38fr);
+  align-items: stretch;
+}
+
+.structure-facts {
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: clamp(24px, 3vw, 42px);
+  color: var(--text);
+  background: var(--panel);
+  transform: translateY(var(--facts-shift, 0px));
+  transition: transform 80ms linear;
+}
+
+.structure-facts > span {
+  color: var(--yellow);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+}
+
+.structure-facts > strong {
+  margin: 20px 0 28px;
+  font-size: clamp(68px, 8vw, 118px);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+}
+
+.structure-facts dl {
+  margin: 0;
+}
+
+.structure-facts dl div {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding: 13px 0;
+}
+
+.structure-facts dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.structure-facts dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.structure-facts a {
+  width: fit-content;
+  margin-top: auto;
+  border-bottom: 1px solid currentColor;
+  padding-top: 28px;
+  color: var(--yellow);
+  font-weight: 800;
+}
+
+.research-media-grid .protein-stage {
+  min-height: 520px;
+  transform: translateY(var(--stage-lift, 0px));
+  transition: transform 80ms linear;
+}
+
+#proteinViewer canvas {
+  cursor: grab;
+}
+
+#proteinViewer canvas:active {
+  cursor: grabbing;
+}
+
+@media (max-width: 980px) {
+  .research-media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .structure-facts {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo img,
+  .structure-facts,
+  .research-media-grid .protein-stage {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Palette: ink green + ivory + amber */
 :root {
   --bg: #fdfef9;
@@ -1277,3 +1378,4 @@ tbody tr.selected {
 :focus-visible {
   outline-color: var(--yellow);
 }
+

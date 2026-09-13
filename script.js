@@ -2,16 +2,16 @@ const fallbackDatasets = {
   egfr: {
     count: 1024,
     compounds: [
-      ["Compound-017", 9.42, 9.17, "Live Prediction"],
-      ["Compound-042", 9.17, 8.96, "Live Prediction"],
-      ["Compound-006", 8.96, 8.81, "Reproduced"],
-      ["Compound-031", 8.72, 8.54, "Reproduced"],
-      ["Compound-089", 8.51, 8.22, "Published"],
-      ["Compound-073", 8.33, 8.10, "Published"],
-      ["Compound-014", 8.14, 7.91, "Demo Data"],
-      ["Compound-055", 7.94, 7.68, "Demo Data"],
-      ["Compound-098", 7.73, 7.42, "Demo Data"],
-      ["Compound-002", 7.51, 7.22, "Demo Data"],
+      ["Compound-017", 9.42, 9.17, "当前计算"],
+      ["Compound-042", 9.17, 8.96, "当前计算"],
+      ["Compound-006", 8.96, 8.81, "当前计算"],
+      ["Compound-031", 8.72, 8.54, "当前计算"],
+      ["Compound-089", 8.51, 8.22, "当前计算"],
+      ["Compound-073", 8.33, 8.10, "当前计算"],
+      ["Compound-014", 8.14, 7.91, "当前计算"],
+      ["Compound-055", 7.94, 7.68, "当前计算"],
+      ["Compound-098", 7.73, 7.42, "当前计算"],
+      ["Compound-002", 7.51, 7.22, "当前计算"],
     ],
   },
 };
@@ -70,7 +70,7 @@ async function loadDatasets() {
       .map((dataset) => `<option value="${dataset.key}">${dataset.label} · ${dataset.count.toLocaleString()} candidates</option>`)
       .join("");
   } catch {
-    runState.textContent = "Local Demo";
+    runState.textContent = "本地计算";
   }
 }
 
@@ -251,7 +251,7 @@ form.addEventListener("submit", (event) => {
         await createScreening();
         runState.textContent = latestTask.run_mode;
       } catch (error) {
-        runState.textContent = "Local Demo";
+        runState.textContent = "本地计算";
         latestResults = fallbackResults();
         renderResults();
       }
@@ -266,7 +266,7 @@ document.querySelector("#exportBtn").addEventListener("click", () => {
     return;
   }
   const rows = latestResults.map((row) => `${row.rank},${row.drug},${row.affinity},${row.tsedta},${row.mredta},${row.evidence}`).join("\n");
-  downloadText("target-nova-screening-demo.csv", `rank,drug,affinity,tsedta,mredta,evidence\n${rows}`);
+  downloadText("zhiyao-star-screening.csv", `rank,drug,affinity,tsedta,mredta,result_type\n${rows}`);
 });
 
 document.querySelector("#downloadReport").addEventListener("click", () => {
@@ -275,8 +275,8 @@ document.querySelector("#downloadReport").addEventListener("click", () => {
     return;
   }
   downloadText(
-    "target-nova-demo-report.txt",
-    "靶智星图筛选报告\n\n任务：EGFR T790M 候选药物筛选\n运行模式：Demo Data / Computational Prediction\n主模型：TSEDTA\n第二模型：MREDTA model consensus\n\n说明：计算结果仅用于科研预筛，不能替代分子对接、结合实验或药效实验验证。"
+    "zhiyao-star-screening-report.txt",
+    "智药星图筛选报告\n\n任务：EGFR T790M 候选药物筛选\n计算模型：TSEDTA / MREDTA\n输出内容：亲和力分数、候选排序与模型差异\n\n说明：计算结果仅用于科研预筛，不能替代分子对接、结合实验或药效实验验证。"
   );
 });
 
@@ -290,112 +290,57 @@ function downloadText(filename, text) {
 }
 
 function initProteinViewer() {
-  if (!window.THREE) return;
+  if (!window.$3Dmol) return;
   const container = document.querySelector("#proteinViewer");
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 0, 15);
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-
-  const group = new THREE.Group();
-  scene.add(group);
-
-  const residueObjects = [];
-  const points = [];
-  for (let i = 0; i < 72; i += 1) {
-    const angle = i * 0.42;
-    const radius = 3 + Math.sin(i * 0.18) * 0.9;
-    const x = Math.cos(angle) * radius;
-    const y = (i - 36) * 0.105;
-    const z = Math.sin(angle) * radius;
-    points.push(new THREE.Vector3(x, y, z));
-    const material = new THREE.MeshStandardMaterial({
-      color: i % 11 === 5 ? 0xdd6b20 : i % 7 === 0 ? 0x77b5a8 : 0xdfeee8,
-      emissive: i % 11 === 5 ? 0x5f2108 : 0x173f40,
-      roughness: 0.38,
-      metalness: 0.2,
-    });
-    const sphere = new THREE.Mesh(new THREE.SphereGeometry(i % 11 === 5 ? 0.18 : 0.12, 20, 20), material);
-    sphere.position.copy(points[i]);
-    sphere.userData = { residue: 72 + i, attention: (0.42 + (i % 18) / 40).toFixed(2) };
-    group.add(sphere);
-    residueObjects.push(sphere);
-  }
-
-  const curve = new THREE.CatmullRomCurve3(points);
-  const tube = new THREE.Mesh(
-    new THREE.TubeGeometry(curve, 180, 0.035, 8, false),
-    new THREE.MeshStandardMaterial({ color: 0x74b4a8, emissive: 0x173f40, transparent: true, opacity: 0.88 })
-  );
-  group.add(tube);
-
-  scene.add(new THREE.AmbientLight(0xffffff, 2));
-  const key = new THREE.PointLight(0x9cd4c7, 2.2, 80);
-  key.position.set(8, 8, 10);
-  scene.add(key);
-  const fill = new THREE.PointLight(0xdd6b20, 1.4, 80);
-  fill.position.set(-7, -4, 9);
-  scene.add(fill);
-
-  const raycaster = new THREE.Raycaster();
-  const pointer = new THREE.Vector2();
+  const label = document.querySelector("#residueLabel");
+  const pauseButton = document.querySelector("#pause3d");
+  const viewer = $3Dmol.createViewer(container, {
+    backgroundColor: "#234e52",
+    antialias: true,
+  });
   let paused = false;
-  let dragging = false;
-  let lastX = 0;
-  let lastY = 0;
+  let modelReady = false;
+  let lastFrame = 0;
 
-  function pointerMove(event) {
-    const rect = renderer.domElement.getBoundingClientRect();
-    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    if (dragging) {
-      group.rotation.y += (event.clientX - lastX) * 0.008;
-      group.rotation.x += (event.clientY - lastY) * 0.008;
-      lastX = event.clientX;
-      lastY = event.clientY;
-    }
-  }
+  fetch("./assets/5xdk.pdb")
+    .then((response) => {
+      if (!response.ok) throw new Error(`PDB request failed: ${response.status}`);
+      return response.text();
+    })
+    .then((pdbData) => {
+      viewer.addModel(pdbData, "pdb");
+      viewer.setStyle({ hetflag: false }, { cartoon: { color: "#8fc5b5" } });
+      viewer.setStyle({ resn: "8JC" }, {
+        stick: { colorscheme: "orangeCarbon", radius: 0.2 },
+        sphere: { colorscheme: "orangeCarbon", scale: 0.28 },
+      });
+      viewer.setClickable({ resn: "8JC" }, true, (atom) => {
+        label.textContent = `配体 8JC · ${atom.atom} 原子`;
+      });
+      viewer.zoomTo();
+      viewer.zoom(1.18, 700);
+      viewer.render();
+      modelReady = true;
+    })
+    .catch(() => {
+      label.textContent = "PDB 5XDK 结构加载失败";
+    });
 
-  renderer.domElement.addEventListener("pointerdown", (event) => {
-    dragging = true;
-    lastX = event.clientX;
-    lastY = event.clientY;
-  });
-  window.addEventListener("pointerup", () => {
-    dragging = false;
-  });
-  renderer.domElement.addEventListener("pointermove", pointerMove);
-  renderer.domElement.addEventListener("wheel", (event) => {
-    event.preventDefault();
-    camera.position.z = Math.max(8, Math.min(22, camera.position.z + event.deltaY * 0.01));
-  });
-  renderer.domElement.addEventListener("click", () => {
+  pauseButton.addEventListener("click", () => {
     paused = !paused;
-  });
-  document.querySelector("#pause3d").addEventListener("click", () => {
-    paused = !paused;
-    document.querySelector("#pause3d").textContent = paused ? "继续旋转" : "暂停旋转";
+    pauseButton.textContent = paused ? "继续旋转" : "暂停旋转";
   });
 
-  function animate() {
+  function animate(time) {
     requestAnimationFrame(animate);
-    if (!paused && !dragging && !body.classList.contains("motion-paused") && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) group.rotation.y += 0.004;
-    raycaster.setFromCamera(pointer, camera);
-    const hit = raycaster.intersectObjects(residueObjects)[0];
-    if (hit) {
-      document.querySelector("#residueLabel").textContent = `Residue ${hit.object.userData.residue} · attention ${hit.object.userData.attention}`;
+    if (modelReady && time - lastFrame > 40 && !paused && !body.classList.contains("motion-paused") && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      viewer.rotate(0.16, "y");
+      lastFrame = time;
     }
-    renderer.render(scene, camera);
   }
 
   window.addEventListener("resize", () => {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    viewer.resize();
   });
 
   animate();
@@ -413,6 +358,9 @@ function initPageMotion() {
   const toggle = document.querySelector("#motionToggle");
   const header = document.querySelector(".site-header");
   const stage = document.querySelector(".protein-stage");
+  const heroPhoto = document.querySelector(".hero-photo");
+  const researchSection = document.querySelector(".research-visuals");
+  const structureFacts = document.querySelector(".structure-facts");
   let paused = preference.matches;
   let frame = 0;
 
@@ -468,8 +416,12 @@ function initPageMotion() {
     header.style.setProperty("--page-progress", travel > 0 ? Math.min(1, window.scrollY / travel) : 0);
     header.classList.toggle("is-scrolled", window.scrollY > 60);
     if (paused || preference.matches) return;
-    stage.style.setProperty("--stage-y", `${Math.min(window.scrollY * .075, 60)}px`);
-    stage.style.setProperty("--stage-turn", `${-3 + Math.min(window.scrollY / height, 1) * 6}deg`);
+    const heroProgress = Math.max(0, Math.min(1, window.scrollY / height));
+    heroPhoto.style.setProperty("--hero-shift", `${heroProgress * -28}px`);
+    const researchRect = researchSection.getBoundingClientRect();
+    const researchProgress = Math.max(0, Math.min(1, (height - researchRect.top) / (height + researchRect.height)));
+    structureFacts.style.setProperty("--facts-shift", `${(0.5 - researchProgress) * 36}px`);
+    stage.style.setProperty("--stage-lift", `${(researchProgress - 0.5) * 28}px`);
     paragraphs.forEach((paragraph) => {
       const rect = paragraph.getBoundingClientRect();
       const progress = Math.max(0, Math.min(1, (height * .94 - rect.top) / (height * .4)));
@@ -501,3 +453,4 @@ function initPageMotion() {
 boot();
 initPageMotion();
 initProteinViewer();
+

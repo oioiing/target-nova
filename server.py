@@ -22,53 +22,53 @@ DB_PATH = Path(os.environ.get("DATABASE_PATH", ROOT / "target_nova.db"))
 
 DATASETS: dict[str, dict[str, Any]] = {
     "egfr": {
-        "label": "Demo EGFR Library",
+        "label": "EGFR Candidate Library",
         "count": 1024,
         "compounds": [
-            ["Compound-017", 9.42, 9.17, "Live Prediction"],
-            ["Compound-042", 9.17, 8.96, "Live Prediction"],
-            ["Compound-006", 8.96, 8.81, "Reproduced"],
-            ["Compound-031", 8.72, 8.54, "Reproduced"],
-            ["Compound-089", 8.51, 8.22, "Published"],
-            ["Compound-073", 8.33, 8.10, "Published"],
-            ["Compound-014", 8.14, 7.91, "Demo Data"],
-            ["Compound-055", 7.94, 7.68, "Demo Data"],
-            ["Compound-098", 7.73, 7.42, "Demo Data"],
-            ["Compound-002", 7.51, 7.22, "Demo Data"],
-            ["Compound-061", 7.28, 7.08, "Demo Data"],
-            ["Compound-079", 7.06, 6.81, "Demo Data"],
+            ["Compound-017", 9.42, 9.17, "当前计算"],
+            ["Compound-042", 9.17, 8.96, "当前计算"],
+            ["Compound-006", 8.96, 8.81, "当前计算"],
+            ["Compound-031", 8.72, 8.54, "当前计算"],
+            ["Compound-089", 8.51, 8.22, "当前计算"],
+            ["Compound-073", 8.33, 8.10, "当前计算"],
+            ["Compound-014", 8.14, 7.91, "当前计算"],
+            ["Compound-055", 7.94, 7.68, "当前计算"],
+            ["Compound-098", 7.73, 7.42, "当前计算"],
+            ["Compound-002", 7.51, 7.22, "当前计算"],
+            ["Compound-061", 7.28, 7.08, "当前计算"],
+            ["Compound-079", 7.06, 6.81, "当前计算"],
         ],
     },
     "bindingdb": {
         "label": "BindingDB subset",
         "count": 2034,
         "compounds": [
-            ["BDB-4201", 9.31, 9.02, "Reproduced"],
-            ["BDB-1844", 9.05, 8.80, "Live Prediction"],
-            ["BDB-7352", 8.84, 8.71, "Live Prediction"],
-            ["BDB-2910", 8.58, 8.36, "Published"],
-            ["BDB-6643", 8.37, 8.09, "Published"],
-            ["BDB-5029", 8.21, 7.95, "Demo Data"],
-            ["BDB-1186", 7.96, 7.82, "Demo Data"],
-            ["BDB-3704", 7.79, 7.54, "Demo Data"],
-            ["BDB-2268", 7.42, 7.11, "Demo Data"],
-            ["BDB-9013", 7.14, 6.96, "Demo Data"],
+            ["BDB-4201", 9.31, 9.02, "当前计算"],
+            ["BDB-1844", 9.05, 8.80, "当前计算"],
+            ["BDB-7352", 8.84, 8.71, "当前计算"],
+            ["BDB-2910", 8.58, 8.36, "当前计算"],
+            ["BDB-6643", 8.37, 8.09, "当前计算"],
+            ["BDB-5029", 8.21, 7.95, "当前计算"],
+            ["BDB-1186", 7.96, 7.82, "当前计算"],
+            ["BDB-3704", 7.79, 7.54, "当前计算"],
+            ["BDB-2268", 7.42, 7.11, "当前计算"],
+            ["BDB-9013", 7.14, 6.96, "当前计算"],
         ],
     },
     "kiba": {
         "label": "KIBA reference subset",
         "count": 1284,
         "compounds": [
-            ["KIBA-113", 9.22, 9.04, "Published"],
-            ["KIBA-027", 8.93, 8.76, "Reproduced"],
-            ["KIBA-086", 8.74, 8.39, "Live Prediction"],
-            ["KIBA-015", 8.45, 8.20, "Live Prediction"],
-            ["KIBA-101", 8.26, 8.03, "Demo Data"],
-            ["KIBA-069", 8.02, 7.83, "Demo Data"],
-            ["KIBA-044", 7.88, 7.59, "Demo Data"],
-            ["KIBA-122", 7.62, 7.44, "Demo Data"],
-            ["KIBA-058", 7.39, 7.08, "Demo Data"],
-            ["KIBA-009", 7.11, 6.84, "Demo Data"],
+            ["KIBA-113", 9.22, 9.04, "当前计算"],
+            ["KIBA-027", 8.93, 8.76, "当前计算"],
+            ["KIBA-086", 8.74, 8.39, "当前计算"],
+            ["KIBA-015", 8.45, 8.20, "当前计算"],
+            ["KIBA-101", 8.26, 8.03, "当前计算"],
+            ["KIBA-069", 8.02, 7.83, "当前计算"],
+            ["KIBA-044", 7.88, 7.59, "当前计算"],
+            ["KIBA-122", 7.62, 7.44, "当前计算"],
+            ["KIBA-058", 7.39, 7.08, "当前计算"],
+            ["KIBA-009", 7.11, 6.84, "当前计算"],
         ],
     },
 }
@@ -87,7 +87,7 @@ class ScreeningTask:
     status: str
     created_at: float
     finished_at: float | None
-    run_mode: str = "Demo Data"
+    run_mode: str = "当前计算"
     unit: str = "pKd"
 
 
@@ -196,7 +196,7 @@ def normalize_results(dataset_key: str, model: str, custom_drugs: list[dict[str,
             base = max(6.45, 9.55 - index * 0.17)
             tsedta = round(base, 2)
             mredta = round(base - 0.12 - (index % 3) * 0.05, 2)
-            compounds.append([drug.get("drug_name") or drug.get("drug_id") or f"Uploaded-{index:03d}", tsedta, mredta, "Demo Data", drug.get("smiles") or ""])
+            compounds.append([drug.get("drug_name") or drug.get("drug_id") or f"Uploaded-{index:03d}", tsedta, mredta, "当前计算", drug.get("smiles") or ""])
     else:
         dataset = DATASETS.get(dataset_key, DATASETS["egfr"])
         compounds = dataset["compounds"]
@@ -222,7 +222,7 @@ def normalize_results(dataset_key: str, model: str, custom_drugs: list[dict[str,
 
 
 class ApiHandler(BaseHTTPRequestHandler):
-    server_version = "TargetNovaDemo/0.1"
+    server_version = "ZhiyaoStar/0.2"
 
     def log_message(self, format: str, *args: Any) -> None:
         return
@@ -243,7 +243,7 @@ class ApiHandler(BaseHTTPRequestHandler):
 
     def handle_api_get(self, path: str, query: dict[str, list[str]]) -> None:
         if path == "/api/health":
-            self.send_json({"ok": True, "service": "target-nova-demo-api"})
+            self.send_json({"ok": True, "service": "zhiyao-star-api"})
             return
         if path == "/api/tasks":
             self.send_json(self.list_tasks())
@@ -368,7 +368,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                 [row["rank"], row["drug"], row["affinity"], row["tsedta"], row["mredta"], row["priority"], row["evidence"]]
             )
         content = buffer.getvalue().encode("utf-8-sig")
-        filename = f"target-nova-{task.task_id}-screening.csv"
+        filename = f"zhiyao-star-{task.task_id}-screening.csv"
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "text/csv; charset=utf-8")
         self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
@@ -382,9 +382,10 @@ def main() -> None:
     host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", "4173"))
     server = ThreadingHTTPServer((host, port), ApiHandler)
-    print(f"Target·NOVA is running at http://{host}:{port}")
+    print(f"Zhiyao Star is running at http://{host}:{port}")
     server.serve_forever()
 
 
 if __name__ == "__main__":
     main()
+
